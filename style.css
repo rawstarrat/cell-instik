@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+  background: #121212;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+input, button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+button {
+  background: #00f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
