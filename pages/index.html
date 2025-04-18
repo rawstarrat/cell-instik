@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cellstik - Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+  <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-xl">
+    <h1 class="text-3xl font-bold text-center mb-6">Cellstik</h1>
+    <p class="text-center text-sm mb-4">Download video TikTok & IG tanpa watermark</p>
+    <input id="videoLink" type="url" placeholder="Tempel link TikTok / Instagram"
+      class="w-full p-3 rounded-lg mb-4 bg-gray-700 text-white" />
+    <button onclick="downloadVideo()" class="w-full bg-blue-600 p-3 rounded-lg font-semibold">
+      Download
+    </button>
+    <div id="result" class="mt-6 hidden">
+      <h2 class="text-xl font-semibold mb-2">Hasil:</h2>
+      <video id="previewVideo" controls class="w-full rounded-lg mb-3"></video>
+      <a id="downloadBtn" href="#" download class="block text-center bg-green-600 p-3 rounded-lg text-white font-semibold">
+        Download Video
+      </a>
+    </div>
+  </div>
+  <script>
+    async function downloadVideo() {
+      const link = document.getElementById('videoLink').value;
+      const res = await fetch('/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: link }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('previewVideo').src = data.videoUrl;
+        document.getElementById('downloadBtn').href = data.videoUrl;
+        document.getElementById('result').classList.remove('hidden');
+      } else {
+        alert(data.message);
+      }
+    }
+  </script>
+</body>
+</html>
